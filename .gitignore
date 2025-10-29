@@ -1,0 +1,84 @@
+# --- Archivos Compilados y de Ejecución ---
+# Excluye los archivos .class generados por la compilación de Java.
+*.class
+
+# Excluye los archivos JAR, WAR, EAR, etc. que se generan al empaquetar la aplicación.
+# Generalmente, estos se construyen a partir del código fuente y no se guardan en el repositorio.
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# --- Herramientas de Construcción (Build Tools) ---
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle
+build/
+!gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# --- Archivos de Configuración de IDEs ---
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse
+.project
+.classpath
+.cproject
+.settings/
+bin/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Visual Studio Code
+.vscode/
+
+# --- Archivos de Log y Errores ---
+# Excluye todos los archivos de log.
+*.log
+
+# Logs de errores de la máquina virtual de Java (VM)
+hs_err_pid*
+replay_pid*
+
+# --- Archivos Generados por el Sistema Operativo ---
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# --- Archivos Temporales ---
+*.tmp
+*.temp
+*.swp
+*~
