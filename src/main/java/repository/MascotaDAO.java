@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import model.entities.Mascota;
+import model.enums.Sexo;
 import util.ConexionDB;
 
 public class MascotaDAO {
@@ -21,15 +22,15 @@ public class MascotaDAO {
             ps.setInt(1, m.getDueñoId());
             ps.setString(2, m.getNombre());
             ps.setInt(3, m.getRazaId());
-            ps.setDate(4, new java.sql.Date(m.getFechaNacimiento().getTime()));
-            ps.setString(5, m.getSexo().toString()); // Se asume que Sexo es un enum
+            ps.setDate(4, m.getFechaNacimiento());
+            ps.setString(5, m.getSexo().toString());
             ps.setDouble(6, m.getPesoActual());
             ps.setString(7, m.getMicrochip());
             ps.setString(8, m.getTatuaje());
             ps.setString(9, m.getUrlFoto());
             ps.setString(10, m.getAlergias());
             ps.setString(11, m.getCondicionesPreexistentes());
-            ps.setDate(12, new java.sql.Date(m.getFechaRegistro().getTime()));
+            ps.setDate(12, m.getFechaRegistro());
             ps.setBoolean(13, m.getActivo());
             
             int filas = ps.executeUpdate();
@@ -61,7 +62,7 @@ public class MascotaDAO {
                 String nombre = rs.getString("nombre");
                 int razaId = rs.getInt("razaId");
                 Date fechaNacimiento = rs.getDate("fechaNacimiento");
-                Mascota.Sexo sexo = Mascota.Sexo.valueOf(rs.getString("sexo")); 
+                Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
                 double pesoActual = rs.getDouble("pesoActual");
                 String microchip = rs.getString("microchip");
                 String tatuaje = rs.getString("tatuaje");
@@ -95,7 +96,7 @@ public class MascotaDAO {
                     String nombre = rs.getString("nombre");
                     int razaId = rs.getInt("razaId");
                     Date fechaNacimiento = rs.getDate("fechaNacimiento");
-                    Mascota.Sexo sexo = Mascota.Sexo.valueOf(rs.getString("sexo"));
+                    Sexo sexo = Sexo.valueOf(rs.getString("sexo"));
                     double pesoActual = rs.getDouble("pesoActual");
                     String microchip = rs.getString("microchip");
                     String tatuaje = rs.getString("tatuaje");
@@ -124,7 +125,7 @@ public class MascotaDAO {
             ps.setInt(1, m.getDueñoId());
             ps.setString(2, m.getNombre());
             ps.setInt(3, m.getRazaId());
-            ps.setDate(4, new java.sql.Date(m.getFechaNacimiento().getTime()));
+            ps.setDate(4, m.getFechaNacimiento());
             ps.setString(5, m.getSexo().toString());
             ps.setDouble(6, m.getPesoActual());
             ps.setString(7, m.getMicrochip());
