@@ -4,23 +4,7 @@ import java.sql.Date;
 import model.enums.Sexo;
 
 public class Mascota {
-    /*
-    id INT AUTO_INCREMENT PRIMARY KEY,
-  dueno_id INT NOT NULL,
-  nombre VARCHAR(100) NOT NULL,
-  raza_id INT NOT NULL,
-  fecha_nacimiento DATE,
-  sexo ENUM('Macho', 'Hembra') NOT NULL,
-  peso_actual DECIMAL(5,2),
-  microchip VARCHAR(50) UNIQUE,
-  tatuaje VARCHAR(50),
-  url_foto VARCHAR(255),
-  alergias TEXT,
-  condiciones_preexistentes TEXT,
-  fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
-  activo BOOLEAN DEFAULT TRUE,
-    */
-    
+
     private int id;
     private int dueñoId;
     private String nombre;
@@ -75,9 +59,54 @@ public class Mascota {
         activo = pActivo;
     }
     
-    public int getId(){return id;}
-    public int getDueñoId(){return dueñoId;}
-    public int getRazaId(){return razaId;}
-
     
+    public int getId() { return id; }
+    public int getDueñoId() { return dueñoId; }
+    public String getNombre() { return nombre; }
+    public int getRazaId() { return razaId; }
+    public Date getFechaNacimiento() { return fechaNacimiento; }
+    public Sexo getSexo() { return sexo; }
+    public double getPesoActual() { return pesoActual; }
+    public String getMicrochip() { return microchip; }
+    public String getTatuaje() { return tatuaje; }
+    public String getUrlFoto() { return urlFoto; }
+    public String getAlergias() { return alergias; }
+    public String getCondicionesPreexistentes() { return condicionesPreexistentes; }
+    public Date getFechaRegistro() { return fechaRegistro; }
+    public boolean getActivo() { return activo; }
+
+    //-------------------------------------------------------------------------------
+    
+    public void setId(int pId) { id = pId; }
+    public void setDueñoId(int pDueñoId) { dueñoId = pDueñoId; }
+    public void setNombre(String pNombre) { nombre = pNombre; }
+    public void setRazaId(int pRazaId) { razaId = pRazaId; }
+    public void setFechaNacimiento(Date pFechaNacimiento) { fechaNacimiento = pFechaNacimiento; }
+    public void setSexo(Sexo sexo) { this.sexo = sexo; }
+    public void setPesoActual(double pPesoActual) { pesoActual = pPesoActual; }
+    public void setMicrochip(String pMicrochip) { microchip = pMicrochip; }
+    public void setTatuaje(String pTatuaje) { tatuaje = pTatuaje; }
+    public void setUrlFoto(String pUrlFoto) { urlFoto = pUrlFoto; }
+    public void setAlergias(String pAlergias) { alergias = pAlergias; }
+    public void setCondicionesPreexistentes(String condicionesPreexistentes) { this.condicionesPreexistentes = condicionesPreexistentes; }
+    public void setFechaRegistro(Date pFechaRegistro) { fechaRegistro = pFechaRegistro; }
+    public void setActivo(boolean pActivo) { activo = pActivo; }
+
+    @Override
+    public String toString() {
+        return "Mascota: id = " + id +
+               ", \ndueñoId = " + dueñoId +
+               ", \nnombre = " + nombre +
+               ", \nrazaId = " + razaId +
+               ", \nfecha de nacimiento = " + fechaNacimiento +
+               ", \nsexo = " + sexo +
+               ", \npeso actual = " + pesoActual +
+               ", \nmicrochip = " + microchip +
+               ", \ntatuaje = " + tatuaje +
+               ", \nurl foto = " + urlFoto +
+               ", \nalergias = " + alergias +
+               ", \ncondiciones preexistentes = " + condicionesPreexistentes +
+               ", \nfecha de registro = " + fechaRegistro +
+               ", \nestado = " + activo;
+    }
 }
