@@ -117,7 +117,7 @@ public class MascotaDAO {
     }
 
     public void actualizar(Mascota m) {
-        String sql = "UPDATE mascota SET dueñoId=?, nombre=?, razaId=?, fechaNacimiento=?, sexo=?, pesoActual=?, microchip=?, tatuaje=?, urlFoto=?, alergias=?, condicionesPreexistentes=?, activo=? WHERE id=?";
+        String sql = "UPDATE mascotas SET dueno_id=?, nombre=?, raza_id=?, fecha_nacimiento=?, sexo=?, peso_actual=?, microchip=?, tatuaje=?, url_foto=?, alergias=?, condiciones_preexistentes=?, activo=? WHERE id=?";
         
         try (Connection con = ConexionDB.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -145,7 +145,7 @@ public class MascotaDAO {
     }
 
     public void eliminar(int idMascota) {
-        String sql = "DELETE FROM mascota WHERE id = ?";
+        String sql = "DELETE FROM mascotas WHERE id = ?";
         
         try (Connection con = ConexionDB.conectar();
              PreparedStatement ps = con.prepareStatement(sql)) {

@@ -41,22 +41,24 @@ public class Dueño {
     }
     
     public int getId(){return id;}
-    
     public String getNombre(){return nombre;}
-    
     public String getNumeroDocumento(){return numeroDocumento;}
-    
     public String getDireccion(){return direccion;}
-    
     public String getTelefono(){return telefono;}
-    
     public String getEmail(){return email;}
-    
-    public String getConatactoEmergencia(){return contactoEmergencia;}
-    
+    public String getContactoEmergencia(){return contactoEmergencia;}
     public Date getFechaRegistro(){return fechaRegistro;}
-    
     public boolean getActivo(){return activo;}
+    
+    public void setId(int id){ this.id = id; }
+    public void setNombre(String nombre){ this.nombre = nombre; }
+    public void setNumeroDocumento(String numeroDocumento){ this.numeroDocumento = numeroDocumento; }
+    public void setDireccion(String direccion){ this.direccion = direccion; }
+    public void setTelefono(String telefono){ this.telefono = telefono; }
+    public void setEmail(String email){ this.email = email; }
+    public void setContactoEmergencia(String contactoEmergencia){ this.contactoEmergencia = contactoEmergencia; }
+    public void setFechaRegistro(Date fechaRegistro){ this.fechaRegistro = fechaRegistro; }
+    public void setActivo(boolean activo){ this.activo = activo; }
     
     @Override
     public String toString(){
