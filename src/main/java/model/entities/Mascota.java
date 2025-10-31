@@ -82,7 +82,7 @@ public class Mascota {
     public void setNombre(String pNombre) { nombre = pNombre; }
     public void setRazaId(int pRazaId) { razaId = pRazaId; }
     public void setFechaNacimiento(Date pFechaNacimiento) { fechaNacimiento = pFechaNacimiento; }
-    public void setSexo(Sexo sexo) { this.sexo = sexo; }
+    public void setSexo(Sexo pSexo) { sexo = pSexo; }
     public void setPesoActual(double pPesoActual) { pesoActual = pPesoActual; }
     public void setMicrochip(String pMicrochip) { microchip = pMicrochip; }
     public void setTatuaje(String pTatuaje) { tatuaje = pTatuaje; }
