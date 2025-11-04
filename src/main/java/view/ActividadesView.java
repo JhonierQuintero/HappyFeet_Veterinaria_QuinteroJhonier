@@ -86,9 +86,12 @@ public class ActividadesView {
 
     private void listarMascotasEnAdopcion() {
         System.out.println("\n--- Mascotas Disponibles para Adopcion ---");
+        
         List<MascotaAdopcion> disponibles = controller.listarMascotasParaAdopcion();
+        
         if (disponibles.isEmpty()) {
             System.out.println("No hay mascotas disponibles para adoptar en este momento.");
+        
         } else {
             List<Mascota> todasLasMascotas = controller.listarMascotas();
             disponibles.forEach(ma -> {
@@ -105,6 +108,7 @@ public class ActividadesView {
     private void registrarAdopcion() {
         System.out.println("\n--- Registrar una Adopcion ---");
         listarMascotasEnAdopcion();
+        
         System.out.print("Ingrese el ID de Adopcion de la mascota a adoptar: ");
         int adopcionId = Integer.parseInt(scanner.nextLine());
         
@@ -137,10 +141,13 @@ public class ActividadesView {
 
     private void crearJornada() {
         System.out.println("\n--- Crear Nueva Jornada de Vacunacion ---");
+        
         System.out.print("Nombre de la jornada (ej. Vacunacion Canina Anual): ");
         String nombre = scanner.nextLine();
+        
         System.out.print("Fecha de la jornada (AAAA-MM-DD): ");
         Date fecha = Date.valueOf(scanner.nextLine());
+        
         System.out.print("Ubicacion: ");
         String ubicacion = scanner.nextLine();
         
@@ -155,11 +162,14 @@ public class ActividadesView {
         if (jornadaId == -1) return;
         
         String continuar = "S";
+        
         while (continuar.equalsIgnoreCase("S")) {
             System.out.println("\n-- Nuevo Registro --");
             System.out.print("Documento del dueno: ");
             String doc = scanner.nextLine();
+            
             Dueño dueño = controller.buscarDueñoPorDocumento(doc);
+            
             if (dueño == null) {
                 System.out.println("Dueno no encontrado. Registre al dueno primero.");
                 continue;
@@ -211,8 +221,10 @@ public class ActividadesView {
 
     private void inscribirDueño() {
         System.out.println("\n--- Inscribir Dueno al Club ---");
+        
         System.out.print("Ingrese el documento del dueno: ");
         String doc = scanner.nextLine();
+        
         String resultado = controller.inscribirDueñoAlClub(doc);
         System.out.println(resultado);
     }
@@ -223,6 +235,7 @@ public class ActividadesView {
         String doc = scanner.nextLine();
         
         ClubMascotas socio = controller.consultarPuntos(doc);
+        
         if (socio == null) {
             System.out.println("El dueno no es miembro del club o no fue encontrado.");
         } else {
@@ -232,12 +245,16 @@ public class ActividadesView {
     
     private void registrarPuntosPorCompra() {
         System.out.println("\n--- Registrar Puntos por Compra ---");
+        
         List<Factura> facturas = controller.listarFacturas();
+        
         if (facturas.isEmpty()) {
             System.out.println("No hay facturas registradas en el sistema.");
             return;
         }
+        
         facturas.forEach(f -> System.out.println("ID: " + f.getId() + " | Numero: " + f.getNumeroFactura() + " | Total: " + f.getTotal()));
+        
         System.out.print("Ingrese el ID de la factura para agregar puntos: ");
         int facturaId = Integer.parseInt(scanner.nextLine());
         
@@ -257,14 +274,18 @@ public class ActividadesView {
         }
         
         System.out.println("Puntos disponibles: " + socio.getPuntosDisponibles());
+        
         List<BeneficioClub> beneficios = controller.listarBeneficios();
+        
         if (beneficios.isEmpty()) {
             System.out.println("No hay beneficios disponibles para canjear.");
             return;
         }
 
         System.out.println("--- Beneficios Disponibles ---");
+        
         beneficios.forEach(b -> System.out.println("ID: " + b.getId() + " | Nombre: " + b.getNombre() + " | Puntos Requeridos: " + b.getPuntosNecesarios()));
+        
         System.out.print("Ingrese el ID del beneficio a canjear: ");
         int beneficioId = Integer.parseInt(scanner.nextLine());
         
@@ -290,19 +311,24 @@ public class ActividadesView {
         System.out.println("\n--- Agregar Nuevo Beneficio ---");
         System.out.print("Nombre del beneficio (ej. Descuento 10% en Comida): ");
         String nombre = scanner.nextLine();
+        
         System.out.print("Puntos necesarios para canjear: ");
         int puntos = Integer.parseInt(scanner.nextLine());
         
         BeneficioClub beneficio = new BeneficioClub(0, nombre, "Bronce", puntos, TipoBeneficio.DESCUENTO, 0, true);
         controller.agregarBeneficio(beneficio);
+        
         System.out.println("Beneficio agregado con exito.");
     }
 
     private void listarBeneficios() {
         System.out.println("\n--- Lista de Beneficios del Club ---");
+        
         List<BeneficioClub> beneficios = controller.listarBeneficios();
+        
         if (beneficios.isEmpty()) {
             System.out.println("No hay beneficios registrados.");
+        
         } else {
             beneficios.forEach(b -> System.out.println("ID: " + b.getId() + " | Nombre: " + b.getNombre() + " | Puntos: " + b.getPuntosNecesarios()));
         }
@@ -310,48 +336,66 @@ public class ActividadesView {
 
     private int seleccionarMascota() {
         List<Mascota> mascotas = controller.listarMascotas();
+        
         if (mascotas.isEmpty()) {
             System.out.println("No hay mascotas registradas.");
             return -1;
         }
+        
         System.out.println("--- Seleccione una Mascota ---");
+        
         mascotas.forEach(m -> System.out.println("[" + m.getId() + "] " + m.getNombre()));
+        
         System.out.print("Ingrese el ID de la mascota: ");
         return Integer.parseInt(scanner.nextLine());
     }
     
     private int seleccionarMascotaDeDueño(int dueñoId) {
+        
         List<Mascota> mascotas = controller.listarMascotasPorDueño(dueñoId);
+        
         if (mascotas.isEmpty()) {
             System.out.println("Este dueno no tiene mascotas registradas.");
             return -1;
         }
+        
         System.out.println("--- Seleccione la Mascota ---");
+        
         mascotas.forEach(m -> System.out.println("[" + m.getId() + "] " + m.getNombre()));
+        
         System.out.print("Ingrese el ID de la mascota: ");
         return Integer.parseInt(scanner.nextLine());
     }
 
     private int seleccionarJornada() {
+        
         List<JornadaVacunacion> jornadas = controller.listarJornadas();
+        
         if (jornadas.isEmpty()) {
             System.out.println("No hay jornadas creadas.");
             return -1;
         }
+        
         System.out.println("--- Seleccione una Jornada ---");
+        
         jornadas.forEach(j -> System.out.println("[" + j.getId() + "] " + j.getNombre() + " (" + j.getFecha() + ")"));
+        
         System.out.print("Ingrese el ID de la jornada: ");
         return Integer.parseInt(scanner.nextLine());
     }
     
     private int seleccionarVacuna() {
         List<Inventario> vacunas = controller.listarVacunasDisponibles();
+        
         if (vacunas.isEmpty()) {
             System.out.println("No hay vacunas con stock disponible en el inventario.");
             return -1;
         }
+        
         System.out.println("--- Seleccione la Vacuna a Aplicar ---");
+        
         vacunas.forEach(v -> System.out.println("[" + v.getId() + "] " + v.getNombreProducto() + " | Stock: " + v.getCantidadStock()));
+        
         System.out.print("Ingrese el ID de la vacuna: ");
         return Integer.parseInt(scanner.nextLine());
     }

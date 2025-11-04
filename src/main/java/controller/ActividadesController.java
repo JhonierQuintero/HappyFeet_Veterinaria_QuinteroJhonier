@@ -82,11 +82,13 @@ public class ActividadesController {
 
     public String adoptarMascota(int pMascotaAdopcionId, String pDocumentoNuevoDueño) {
         MascotaAdopcion mascotaAdopcion = mascotaAdopcionDAO.leerPorId(pMascotaAdopcionId);
+        
         if (mascotaAdopcion == null || mascotaAdopcion.getEstado() != EstadoAdopcion.DISPONIBLE) {
             return "Error: La mascota seleccionada no esta disponible para adopcion.";
         }
         
         Dueño nuevoDueño = pacienteController.buscarDueñoPorDocumento(pDocumentoNuevoDueño);
+        
         if (nuevoDueño == null) {
             return "Error: El nuevo dueno no fue encontrado.";
         }
@@ -110,6 +112,7 @@ public class ActividadesController {
 
     private void generarContratoTxt(Adopcion pAdopcion, Mascota pMascota, Dueño pDueño) {
         String nombreArchivo = "contratos/Contrato_Adopcion_" + pMascota.getNombre() + "_" + pDueño.getNumeroDocumento() + ".txt";
+        
         try {
             File directorio = new File("contratos");
             if (!directorio.exists()) { directorio.mkdir(); }
@@ -118,6 +121,7 @@ public class ActividadesController {
             writer.write(pAdopcion.getContratoTexto());
             writer.close();
             System.out.println("Contrato guardado en: " + nombreArchivo);
+        
         } catch (IOException e) {
             System.out.println("Error al generar el archivo del contrato.");
         }
@@ -147,6 +151,7 @@ public class ActividadesController {
     
     public String registrarVacunaEnJornada(RegistroJornadaVacunacion pRegistro) {
         Inventario vacuna = inventarioDAO.leerPorId(pRegistro.getVacunaId());
+        
         if (vacuna == null || vacuna.getCantidadStock() <= 0) {
             return "Error: La vacuna seleccionada no tiene stock disponible.";
         }
@@ -164,12 +169,15 @@ public class ActividadesController {
 
     public String inscribirDueñoAlClub(String pDocumentoDueño) {
         Dueño dueño = pacienteController.buscarDueñoPorDocumento(pDocumentoDueño);
+        
         if (dueño == null) {
             return "Error: El dueno no fue encontrado.";
         }
+        
         if (clubMascotasDAO.leerPorDuenoId(dueño.getId()) != null) {
             return "Error: El dueno ya esta inscrito en el club.";
         }
+        
         ClubMascotas nuevoMiembro = new ClubMascotas(dueño.getId(), 0, new Date(System.currentTimeMillis()), true);
         clubMascotasDAO.agregar(nuevoMiembro);
         return "Dueno inscrito al Club de Mascotas Frecuentes con exito.";
@@ -177,6 +185,7 @@ public class ActividadesController {
 
     public ClubMascotas consultarPuntos(String pDocumentoDueño) {
         Dueño dueño = pacienteController.buscarDueñoPorDocumento(pDocumentoDueño);
+        
         if (dueño == null) {
             System.out.println("Error: Dueno no encontrado.");
             return null;
@@ -186,22 +195,26 @@ public class ActividadesController {
 
     public String agregarPuntosPorCompra(int pFacturaId) {
         Factura factura = facturaDAO.leerPorId(pFacturaId);
+        
         if (factura == null) {
             return "Error: Factura no encontrada.";
         }
         
         ClubMascotas socio = clubMascotasDAO.leerPorDuenoId(factura.getDuenoId());
+        
         if (socio == null) {
             return "Error: El dueno no es miembro del club.";
         }
         
         int puntosGanados = (int) (factura.getTotal() / 1000);
+        
         if (puntosGanados <= 0) {
             return "El total de la factura no es suficiente para generar puntos.";
         }
         
         int puntosAnteriores = socio.getPuntosDisponibles();
         int puntosNuevos = puntosAnteriores + puntosGanados;
+        
         socio.setPuntosDisponibles(puntosNuevos);
         clubMascotasDAO.actualizar(socio);
         
@@ -234,6 +247,7 @@ public class ActividadesController {
         
         int puntosAnteriores = socio.getPuntosDisponibles();
         int puntosNuevos = puntosAnteriores - beneficio.getPuntosNecesarios();
+        
         socio.setPuntosDisponibles(puntosNuevos);
         clubMascotasDAO.actualizar(socio);
         

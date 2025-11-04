@@ -22,14 +22,11 @@ public class InventarioView {
         int opcion = -1;
         while (opcion != 0) {
             System.out.println("\n--- Modulo de Inventario y Farmacia ---");
-            System.out.println("--- Gestion de Productos ---");
-            System.out.println("1. Agregar Nuevo Producto al Inventario");
+            System.out.println("\n1. Agregar Nuevo Producto al Inventario");
             System.out.println("2. Listar Todos los Productos");
             System.out.println("3. Ajustar Stock de un Producto");
-            System.out.println("--- Alertas Inteligentes ---");
             System.out.println("4. Ver Productos con Stock Bajo");
             System.out.println("5. Ver Productos Proximos a Vencer");
-            System.out.println("--- Gestion de Proveedores ---");
             System.out.println("6. Agregar Nuevo Proveedor");
             System.out.println("7. Listar Todos los Proveedores");
             System.out.println("8. Actualizar Proveedor");
@@ -72,18 +69,25 @@ public class InventarioView {
         
         System.out.print("Lote: ");
         String lote = scanner.nextLine();
+        
         System.out.print("Cantidad inicial en stock: ");
         int stock = Integer.parseInt(scanner.nextLine());
+        
         System.out.print("Stock minimo para alerta: ");
         int stockMin = Integer.parseInt(scanner.nextLine());
+        
         System.out.print("Unidad de medida (ej. unidad, ml, caja): ");
         String unidad = scanner.nextLine();
+        
         System.out.print("Fecha de vencimiento (AAAA-MM-DD): ");
         Date fechaVenc = Date.valueOf(scanner.nextLine());
+        
         System.out.print("Precio de compra: ");
         double precioCompra = Double.parseDouble(scanner.nextLine());
+        
         System.out.print("Precio de venta: ");
         double precioVenta = Double.parseDouble(scanner.nextLine());
+        
         System.out.print("Requiere receta? (S/N): ");
         boolean receta = scanner.nextLine().equalsIgnoreCase("S");
 
@@ -95,6 +99,7 @@ public class InventarioView {
     private void listarProductos() {
         System.out.println("\n--- Listado de Productos en Inventario ---");
         List<Inventario> productos = controller.listarProductos();
+        
         if (productos.isEmpty()) {
             System.out.println("No hay productos en el inventario.");
         } else {
@@ -109,6 +114,7 @@ public class InventarioView {
         
         System.out.print("Ingrese la nueva cantidad total en stock: ");
         int nuevaCantidad = Integer.parseInt(scanner.nextLine());
+        
         System.out.print("Motivo del ajuste (ej. Conteo fisico, Devolucion): ");
         String motivo = scanner.nextLine();
         
@@ -119,6 +125,7 @@ public class InventarioView {
     private void verProductosConStockBajo() {
         System.out.println("\n--- Alerta: Productos con Stock Bajo ---");
         List<Inventario> productos = controller.obtenerProductosConStockBajo();
+        
         if (productos.isEmpty()) {
             System.out.println("No hay productos por debajo del stock minimo.");
         } else {
@@ -141,14 +148,18 @@ public class InventarioView {
     
     private void agregarProveedor() {
         System.out.println("\n--- Agregar Nuevo Proveedor ---");
-        System.out.print("Nombre de la empresa: ");
+        System.out.print("Nombre de la empresa: ");        
         String nombre = scanner.nextLine();
-        System.out.print("Nombre del contacto: ");
+        
+        System.out.print("Nombre del contacto: ");        
         String contacto = scanner.nextLine();
-        System.out.print("Telefono: ");
+        
+        System.out.print("Telefono: ");        
         String tel = scanner.nextLine();
+        
         System.out.print("Email: ");
         String email = scanner.nextLine();
+        
         System.out.print("Direccion: ");
         String dir = scanner.nextLine();
 
@@ -160,6 +171,7 @@ public class InventarioView {
     private void listarProveedores() {
         System.out.println("\n--- Listado de Proveedores ---");
         List<Proveedor> proveedores = controller.listarProveedores();
+        
         if (proveedores.isEmpty()) {
             System.out.println("No hay proveedores registrados.");
         } else {
@@ -219,12 +231,15 @@ public class InventarioView {
 
     private Integer seleccionarProveedor() {
         List<Proveedor> proveedores = controller.listarProveedores();
+        
         if (proveedores.isEmpty()){
             System.out.println("No hay proveedores registrados. El producto se guardara sin proveedor.");
             return null;
         }
         System.out.println("--- Seleccione un Proveedor (o presione Enter para omitir) ---");
+        
         proveedores.forEach(p -> System.out.println("[" + p.getId() + "] " + p.getNombreEmpresa()));
+        
         System.out.print("Ingrese el ID del proveedor: ");
         String idStr = scanner.nextLine();
         return idStr.isEmpty() ? null : Integer.parseInt(idStr);
@@ -232,12 +247,16 @@ public class InventarioView {
     
     private int seleccionarProducto() {
         List<Inventario> productos = controller.listarProductos();
+        
+        
         if (productos.isEmpty()){
             System.out.println("No hay productos registrados. No se puede continuar.");
             return -1;
         }
         System.out.println("--- Seleccione un Producto ---");
+        
         productos.forEach(p -> System.out.println("[" + p.getId() + "] " + p.getNombreProducto()));
+        
         System.out.print("Ingrese el ID del producto: ");
         return Integer.parseInt(scanner.nextLine());
     }

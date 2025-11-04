@@ -120,6 +120,7 @@ public class PacienteView {
         System.out.println("Se eliminara al dueño: " + dueño.getNombre());
         System.out.print("¿Esta seguro? (S/N): ");
         String confirmacion = scanner.nextLine();
+        
         if (confirmacion.equalsIgnoreCase("S")) {
             controller.eliminarDueño(dueño.getId());
             System.out.println("Dueño eliminado.");
@@ -286,8 +287,9 @@ public class PacienteView {
         
         System.out.println("\n-- Seleccione la Especie --");
         List<Especie> especies = controller.listarEspecies();
-        especies.forEach(e -> System.out.println("[" + e.getId() + "] " + e.getNombre()));
+ especies.forEach(e -> System.out.println("[" + e.getId() + "] " + e.getNombre()));
         System.out.print("Ingrese el ID de la especie: ");
+        
         int especieId = scanner.nextInt();
         scanner.nextLine();
         
@@ -295,25 +297,33 @@ public class PacienteView {
         List<Raza> razas = controller.listarRazasPorEspecie(especieId);
         razas.forEach(r -> System.out.println("[" + r.getId() + "] " + r.getNombre()));
         System.out.print("Ingrese el ID de la raza: ");
+        
         int razaId = scanner.nextInt();
         scanner.nextLine();
 
         System.out.print("Fecha de nacimiento (AAAA-MM-DD): ");
         Date fechaNac = Date.valueOf(scanner.nextLine());
+        
         System.out.print("Sexo (Macho/Hembra): ");
         String sexoStr = scanner.nextLine();
         Sexo sexo = sexoStr.equalsIgnoreCase("Macho") ? Sexo.MACHO : Sexo.HEMBRA;
+        
         System.out.print("Peso actual (kg): ");
         double peso = scanner.nextDouble();
         scanner.nextLine();
-        System.out.print("Microchip (opcional): ");
+        
+        System.out.print("Microchip (Si no posee colocar el documento del dueño): ");
         String microchip = scanner.nextLine();
+        
         System.out.print("Tatuaje (opcional): ");
         String tatuaje = scanner.nextLine();
+        
         System.out.print("URL de foto (opcional): ");
         String urlFoto = scanner.nextLine();
+        
         System.out.print("Alergias conocidas: ");
         String alergias = scanner.nextLine();
+        
         System.out.print("Condiciones preexistentes: ");
         String condiciones = scanner.nextLine();
         Date fechaRegistro = new Date(System.currentTimeMillis());

@@ -50,6 +50,7 @@ public class CitasController {
 
     public void registrarConsulta(ConsultaMedica pConsulta) {
         consultaMedicaDAO.agregar(pConsulta);
+        
         if (pConsulta.getId() > 0) {
             HistorialMedico historial = new HistorialMedico(0, pConsulta.getMascotaId(), new java.sql.Date(pConsulta.getFechaHora().getTime()), 2, "Consulta: " + pConsulta.getDiagnostico(), pConsulta.getVeterinarioId(), pConsulta.getId(), null);
             historialMedicoDAO.agregar(historial);
@@ -62,10 +63,13 @@ public class CitasController {
     
     public String crearPrescripcion(Prescripcion pPrescripcion) {
         String resultadoStock = inventarioController.reducirStockPorPrescripcion(pPrescripcion.getProductoId(), pPrescripcion.getCantidad(), pPrescripcion.getConsultaId());
+        
         if (!resultadoStock.equals("Exito")) {
             return resultadoStock;
         }
+        
         prescripcionDAO.agregar(pPrescripcion);
+        
         if (pPrescripcion.getId() > 0) {
             return "Prescripcion creada y stock actualizado con exito.";
         } else {

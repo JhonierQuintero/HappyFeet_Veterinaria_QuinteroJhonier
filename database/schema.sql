@@ -92,7 +92,7 @@ CREATE TABLE mascotas (
   fecha_nacimiento DATE,
   sexo ENUM('Macho', 'Hembra') NOT NULL,
   peso_actual DECIMAL(5,2),
-  microchip VARCHAR(50) UNIQUE,
+  microchip VARCHAR(50),
   tatuaje VARCHAR(50),
   url_foto VARCHAR(255),
   alergias TEXT,

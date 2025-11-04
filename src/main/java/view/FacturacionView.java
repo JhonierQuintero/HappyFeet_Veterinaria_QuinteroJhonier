@@ -28,11 +28,8 @@ public class FacturacionView {
         int opcion = -1;
         while (opcion != 0) {
             System.out.println("\n--- Modulo de Facturacion y Reportes ---");
-            System.out.println("--- Operaciones ---");
-            System.out.println("1. Generar Nueva Factura");
-            System.out.println("--- Reportes ---");
+            System.out.println("\n1. Generar Nueva Factura");
             System.out.println("2. Ver Reportes Gerenciales");
-            System.out.println("--- Administracion ---");
             System.out.println("3. Gestionar Servicios de la Clinica");
             System.out.println("0. Volver al Menu Principal");
 
@@ -53,7 +50,9 @@ public class FacturacionView {
         System.out.println("\n--- Generar Nueva Factura ---");
         System.out.print("Ingrese el documento del dueno: ");
         String doc = scanner.nextLine();
+        
         Dueño dueño = controller.buscarDueñoPorDocumento(doc);
+        
         if (dueño == null) {
             System.out.println("Error: Dueno no encontrado.");
             return;
@@ -64,6 +63,7 @@ public class FacturacionView {
         double subtotalGeneral = 0;
         
         String agregarOtro = "S";
+        
         while (agregarOtro.equalsIgnoreCase("S")) {
             System.out.print("Desea agregar un (1) Servicio o (2) Producto?: ");
             int tipo = Integer.parseInt(scanner.nextLine());
@@ -104,16 +104,20 @@ public class FacturacionView {
     
     private ItemFactura agregarItemServicio() {
         List<Servicio> servicios = controller.getServiciosActivos();
+        
         if(servicios.isEmpty()) {
             System.out.println("No hay servicios activos para facturar. Por favor, agregue uno desde el menu de administracion.");
             return null;
         }
         System.out.println("--- Seleccione un Servicio ---");
+        
         servicios.forEach(s -> System.out.println("ID: " + s.getId() + " | Nombre: " + s.getNombre() + " | Precio: " + s.getPrecioBase()));
+        
         System.out.print("Ingrese el ID del servicio: ");
         int id = Integer.parseInt(scanner.nextLine());
         
         Servicio servicioSeleccionado = servicios.stream().filter(s -> s.getId() == id).findFirst().orElse(null);
+        
         if (servicioSeleccionado == null) {
             System.out.println("ID de servicio no valido.");
             return null;
@@ -124,16 +128,21 @@ public class FacturacionView {
 
     private ItemFactura agregarItemProducto() {
         List<Inventario> productos = controller.getProductosActivos();
+        
         if(productos.isEmpty()){
             System.out.println("No hay productos activos en el inventario.");
             return null;
         }
+        
         System.out.println("--- Seleccione un Producto ---");
+        
         productos.forEach(p -> System.out.println("ID: " + p.getId() + " | Nombre: " + p.getNombreProducto() + " | Precio: " + p.getPrecioVenta() + " | Stock: " + p.getCantidadStock()));
+        
         System.out.print("Ingrese el ID del producto: ");
         int id = Integer.parseInt(scanner.nextLine());
         
         Inventario productoSeleccionado = controller.buscarProductoPorId(id);
+        
         if (productoSeleccionado == null) {
             System.out.println("ID de producto no valido.");
             return null;
@@ -153,6 +162,7 @@ public class FacturacionView {
 
     private void mostrarMenuReportes() {
         int opcion = -1;
+        
         while (opcion != 0) {
             System.out.println("\n--- Menu de Reportes Gerenciales ---");
             System.out.println("1. Servicios mas solicitados");
@@ -176,6 +186,7 @@ public class FacturacionView {
     private void reporteServicios() {
         System.out.println("\n--- Reporte: Servicios Mas Solicitados ---");
         List<String> reporte = controller.generarReporteServiciosMasSolicitados();
+        
         if (reporte.isEmpty()) {
             System.out.println("No hay datos de servicios para mostrar.");
         } else {
@@ -187,6 +198,7 @@ public class FacturacionView {
         System.out.println("\n--- Reporte: Analisis de Facturacion ---");
         System.out.print("Ingrese fecha de inicio (AAAA-MM-DD HH:MM:SS): ");
         Timestamp inicio = Timestamp.valueOf(scanner.nextLine());
+        
         System.out.print("Ingrese fecha de fin (AAAA-MM-DD HH:MM:SS): ");
         Timestamp fin = Timestamp.valueOf(scanner.nextLine());
         
@@ -197,6 +209,7 @@ public class FacturacionView {
     private void reporteInventario() {
         System.out.println("\n--- Reporte: Productos con Stock Bajo ---");
         List<Inventario> productos = controller.getProductosConStockBajo();
+        
         if (productos.isEmpty()) {
             System.out.println("No hay productos por debajo del stock minimo.");
         } else {
@@ -206,6 +219,7 @@ public class FacturacionView {
     
     private void gestionarServicios() {
         int opcion = -1;
+        
         while (opcion != 0) {
             System.out.println("\n--- Administracion de Servicios ---");
             System.out.println("1. Agregar Nuevo Servicio");
@@ -232,12 +246,16 @@ public class FacturacionView {
         System.out.println("\n--- Agregar Nuevo Servicio ---");
         System.out.print("Nombre del servicio: ");
         String nombre = scanner.nextLine();
+        
         System.out.print("Descripcion: ");
         String desc = scanner.nextLine();
+        
         System.out.print("Categoria (ej. Consulta, Cirugia, Vacunacion): ");
         String cat = scanner.nextLine();
+        
         System.out.print("Precio base: ");
         double precio = Double.parseDouble(scanner.nextLine());
+        
         System.out.print("Duracion estimada en minutos: ");
         int duracion = Integer.parseInt(scanner.nextLine());
         
@@ -249,6 +267,7 @@ public class FacturacionView {
     private void listarServicios() {
         System.out.println("\n--- Catalogo de Servicios ---");
         List<Servicio> servicios = controller.listarServicios();
+        
         if (servicios.isEmpty()) {
             System.out.println("No hay servicios registrados.");
         } else {
@@ -269,12 +288,14 @@ public class FacturacionView {
 
         System.out.print("Nuevo precio base (actual: " + servicio.getPrecioBase() + "): ");
         String precioStr = scanner.nextLine();
+        
         if (!precioStr.isEmpty()) {
             servicio.setPrecioBase(Double.parseDouble(precioStr));
         }
 
         System.out.print("Esta activo? (S/N) (actual: " + (servicio.getActivo() ? "S" : "N") + "): ");
         String activoStr = scanner.nextLine();
+        
         if (!activoStr.isEmpty()) {
             servicio.setActivo(activoStr.equalsIgnoreCase("S"));
         }
@@ -295,6 +316,7 @@ public class FacturacionView {
         
         System.out.print("Esta seguro de que desea eliminar este servicio? (S/N): ");
         String conf = scanner.nextLine();
+        
         if (conf.equalsIgnoreCase("S")) {
             controller.eliminarServicio(id);
             System.out.println("Servicio eliminado.");

@@ -29,14 +29,12 @@ public class CitasView {
         int opcion = -1;
         while (opcion != 0) {
             System.out.println("\n--- Modulo de Servicios Medicos ---");
-            System.out.println("--- Gestion de Citas y Consultas ---");
-            System.out.println("1. Agendar Nueva Cita");
+            System.out.println("\n1. Agendar Nueva Cita");
             System.out.println("2. Registrar Consulta Medica con Prescripcion");
             System.out.println("3. Registrar Procedimiento Especial");
             System.out.println("4. Ver Historial Medico de una Mascota");
             System.out.println("5. Listar Todas las Citas");
             System.out.println("6. Cambiar Estado de una Cita");
-            System.out.println("--- Gestion de Veterinarios ---");
             System.out.println("7. Agregar Nuevo Veterinario");
             System.out.println("8. Listar Veterinarios");
             System.out.println("9. Actualizar Veterinario");
@@ -101,16 +99,22 @@ public class CitasView {
         if (vetId == -1) return;
 
         Timestamp fechaHora = new Timestamp(System.currentTimeMillis());
+        
         System.out.print("Motivo de la visita: ");
         String motivo = scanner.nextLine();
+        
         System.out.print("Sintomas observados: ");
         String sintomas = scanner.nextLine();
+        
         System.out.print("Diagnostico del veterinario: ");
         String diagnostico = scanner.nextLine();
+        
         System.out.print("Recomendaciones: ");
         String recomendaciones = scanner.nextLine();
+        
         System.out.print("Peso registrado (kg): ");
         double peso = Double.parseDouble(scanner.nextLine());
+        
         System.out.print("Temperatura (C): ");
         double temp = Double.parseDouble(scanner.nextLine());
         
@@ -121,9 +125,11 @@ public class CitasView {
             System.out.println("Consulta registrada con exito con ID: " + nuevaConsulta.getId());
             System.out.print("Desea agregar una prescripcion para esta consulta? (S/N): ");
             String resp = scanner.nextLine();
+            
             if (resp.equalsIgnoreCase("S")) {
                 gestionarPrescripciones(nuevaConsulta.getId());
             }
+            
         } else {
             System.out.println("Hubo un error al registrar la consulta.");
         }
@@ -131,26 +137,33 @@ public class CitasView {
     
     private void gestionarPrescripciones(int consultaId) {
         String continuar = "S";
+        
         while (continuar.equalsIgnoreCase("S")) {
             System.out.println("\n--- Nueva Prescripcion ---");
             List<Inventario> productos = controller.listarProductosDeInventario();
+            
             if (productos.isEmpty()) {
                 System.out.println("No hay productos en el inventario para prescribir.");
                 return;
             }
             
             productos.forEach(p -> System.out.println("ID: " + p.getId() + " | Nombre: " + p.getNombreProducto() + " | Stock: " + p.getCantidadStock()));
+            
             System.out.print("Ingrese el ID del producto a prescribir: ");
             int prodId = Integer.parseInt(scanner.nextLine());
             
             System.out.print("Cantidad a prescribir: ");
             int cantidad = Integer.parseInt(scanner.nextLine());
+            
             System.out.print("Dosis (ej. 1 tableta, 5 ml): ");
             String dosis = scanner.nextLine();
+            
             System.out.print("Frecuencia (ej. cada 8 horas): ");
             String frec = scanner.nextLine();
+            
             System.out.print("Duracion en dias: ");
             int dias = Integer.parseInt(scanner.nextLine());
+            
             System.out.print("Instrucciones adicionales: ");
             String inst = scanner.nextLine();
             
@@ -177,14 +190,19 @@ public class CitasView {
 
         System.out.print("Nombre del procedimiento (Ej. Cirugia de esterilizacion): ");
         String nombreProc = scanner.nextLine();
+        
         System.out.print("Fecha y Hora del procedimiento (AAAA-MM-DD HH:MM:SS): ");
         Timestamp fechaHora = Timestamp.valueOf(scanner.nextLine());
+        
         System.out.print("Informacion preoperatoria: ");
         String infoPre = scanner.nextLine();
+        
         System.out.print("Detalle del procedimiento: ");
         String detalle = scanner.nextLine();
+        
         System.out.print("Seguimiento postoperatorio: ");
         String seguimiento = scanner.nextLine();
+        
         System.out.print("Costo del procedimiento: ");
         double costo = Double.parseDouble(scanner.nextLine());
 
@@ -203,6 +221,7 @@ public class CitasView {
         System.out.println("Historial de: " + mascota.getNombre());
 
         List<HistorialMedico> historial = controller.verHistorialDeMascota(mascotaId);
+        
         if (historial.isEmpty()) {
             System.out.println("Esta mascota no tiene historial medico registrado.");
         } else {
@@ -213,6 +232,7 @@ public class CitasView {
     private void listarCitas() {
         System.out.println("\n--- Listado de Todas las Citas ---");
         List<Cita> citas = controller.listarCitas();
+        
         if (citas.isEmpty()) {
             System.out.println("No hay citas registradas.");
         } else {
@@ -226,6 +246,7 @@ public class CitasView {
         int citaId = Integer.parseInt(scanner.nextLine());
 
         Cita cita = controller.buscarCitaPorId(citaId);
+        
         if (cita == null) {
             System.out.println("No se encontro una cita con ese ID.");
             return;
@@ -243,16 +264,22 @@ public class CitasView {
         System.out.println("\n--- Registrar Nuevo Veterinario ---");
         System.out.print("Nombre completo: ");
         String nombre = scanner.nextLine();
+        
         System.out.print("Documento de identidad: ");
         String doc = scanner.nextLine();
+        
         System.out.print("Licencia profesional: ");
         String lic = scanner.nextLine();
+        
         System.out.print("Especialidad: ");
         String esp = scanner.nextLine();
+        
         System.out.print("Telefono: ");
         String tel = scanner.nextLine();
+        
         System.out.print("Email: ");
         String email = scanner.nextLine();
+        
         System.out.print("Fecha de contratacion (AAAA-MM-DD): ");
         Date fecha = Date.valueOf(scanner.nextLine());
 
@@ -264,6 +291,7 @@ public class CitasView {
     private void listarVeterinarios() {
         System.out.println("\n--- Listado de Veterinarios ---");
         List<Veterinario> veterinarios = controller.listarVeterinarios();
+        
         if (veterinarios.isEmpty()) {
             System.out.println("No hay veterinarios registrados.");
         } else {
@@ -297,6 +325,7 @@ public class CitasView {
         
         System.out.print("Esta seguro de que desea eliminar a este veterinario? (S/N): ");
         String conf = scanner.nextLine();
+        
         if (conf.equalsIgnoreCase("S")) {
             controller.eliminarVeterinario(vetId);
             System.out.println("Veterinario eliminado.");
@@ -307,12 +336,14 @@ public class CitasView {
     
     private int seleccionarMascota() {
         List<Mascota> mascotas = controller.listarMascotas();
+        
         if (mascotas.isEmpty()) {
             System.out.println("No hay mascotas registradas. Agregue una primero.");
             return -1;
         }
         System.out.println("--- Seleccione una Mascota ---");
         mascotas.forEach(m -> System.out.println("[" + m.getId() + "] " + m.getNombre()));
+        
         System.out.print("Ingrese el ID de la mascota: ");
         int id = Integer.parseInt(scanner.nextLine());
         
@@ -329,8 +360,10 @@ public class CitasView {
             System.out.println("No hay veterinarios registrados.");
             return -1;
         }
+        
         System.out.println("--- Seleccione un Veterinario ---");
         veterinarios.forEach(v -> System.out.println("[" + v.getId() + "] " + v.getNombreCompleto()));
+        
         System.out.print("Ingrese el ID del veterinario: ");
         int id = Integer.parseInt(scanner.nextLine());
         
@@ -343,12 +376,16 @@ public class CitasView {
 
     private int seleccionarEstadoCita() {
         List<CitaEstado> estados = controller.listarEstadosDeCita();
+        
         if (estados.isEmpty()) {
             System.out.println("No hay estados de cita configurados.");
             return -1;
         }
+        
         System.out.println("--- Seleccione un Nuevo Estado ---");
+        
         estados.forEach(e -> System.out.println("[" + e.getId() + "] " + e.getNombre() + " - " + e.getDescripcion()));
+        
         System.out.print("Ingrese el ID del nuevo estado: ");
         return Integer.parseInt(scanner.nextLine());
     }

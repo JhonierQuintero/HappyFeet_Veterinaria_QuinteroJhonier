@@ -48,6 +48,7 @@ public class InventarioController {
 
     public String ajustarStock(int pIdProducto, int pNuevaCantidad, String pMotivo) {
         Inventario producto = inventarioDAO.leerPorId(pIdProducto);
+        
         if (producto == null) {
             return "Error: Producto no encontrado.";
         }
@@ -101,6 +102,7 @@ public class InventarioController {
     
     private void registrarMovimiento(Inventario pProducto, int pCantidad, int pStockAnterior, String pMotivo) {
         TipoMovimientoInventario tipo;
+        
         if (pMotivo.contains("inicial")) {
             tipo = TipoMovimientoInventario.ENTRADA;
         } else if (pCantidad > 0) {
@@ -113,11 +115,14 @@ public class InventarioController {
             pProducto.getId(), tipo, pCantidad, pStockAnterior, pProducto.getCantidadStock(), 
             pMotivo, null, null, "sistema", new Timestamp(System.currentTimeMillis())
         );
+        
         movimientoInventarioDAO.agregar(movimiento);
     }
 
     public String reducirStockPorPrescripcion(int pIdProducto, int pCantidad, int pIdConsulta) {
+        
         Inventario producto = inventarioDAO.leerPorId(pIdProducto);
+        
         if (producto == null) {
             return "Error: El producto seleccionado no existe.";
         }

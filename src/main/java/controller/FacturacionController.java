@@ -34,6 +34,7 @@ public class FacturacionController {
     private InventarioDAO inventarioDAO;
     private MovimientoInventarioDAO movimientoInventarioDAO;
     private ServicioDAO servicioDAO;
+    
     private static final double IMPUESTO_IVA = 0.19;
 
     public FacturacionController() {
@@ -47,6 +48,7 @@ public class FacturacionController {
 
     public void crearFacturaYGenerarTxt(Factura pFactura, List<ItemFactura> pItems) {
         facturaDAO.agregar(pFactura);
+        
         if (pFactura.getId() == 0) {
             System.out.println("Error: No se pudo guardar la factura en la base de datos.");
             return;
@@ -58,6 +60,7 @@ public class FacturacionController {
 
             if (item.getTipoItem() == TipoItemFactura.PRODUCTO) {
                 String resultadoStock = this.reducirStockPorVenta(item.getProductoId(), item.getCantidad(), pFactura.getId());
+                
                 if (!resultadoStock.equals("Exito")) {
                     System.out.println("ADVERTENCIA: " + resultadoStock);
                 }
@@ -68,7 +71,9 @@ public class FacturacionController {
     }
 
     private String reducirStockPorVenta(int pIdProducto, int pCantidad, int pIdFactura) {
+        
         Inventario producto = inventarioDAO.leerPorId(pIdProducto);
+        
         if (producto == null) {
             return "Error: El producto con ID " + pIdProducto + " no existe.";
         }
@@ -143,6 +148,7 @@ public class FacturacionController {
             .collect(Collectors.groupingBy(ItemFactura::getServicioId, Collectors.counting()));
             
         List<String> reporte = new ArrayList<>();
+        
         conteo.entrySet().stream()
             .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
             .forEach(entry -> {
@@ -155,6 +161,7 @@ public class FacturacionController {
     }
     
     public String generarReporteFacturacion(Timestamp pInicio, Timestamp pFin) {
+        
         List<Factura> facturasEnPeriodo = facturaDAO.listar().stream()
             .filter(f -> f.getFechaEmision().after(pInicio) && f.getFechaEmision().before(pFin))
             .collect(Collectors.toList());
