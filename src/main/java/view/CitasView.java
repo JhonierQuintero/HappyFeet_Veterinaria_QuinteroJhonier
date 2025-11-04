@@ -187,6 +187,9 @@ public class CitasView {
 
         int vetId = seleccionarVeterinario();
         if (vetId == -1) return;
+        
+        System.out.println("Ingrese el Tipo de Procedimiento (Cirugías electivas, Cirugías de urgencia etc)");
+        String tipoProce = scanner.nextLine();
 
         System.out.print("Nombre del procedimiento (Ej. Cirugia de esterilizacion): ");
         String nombreProc = scanner.nextLine();
@@ -206,7 +209,7 @@ public class CitasView {
         System.out.print("Costo del procedimiento: ");
         double costo = Double.parseDouble(scanner.nextLine());
 
-        ProcedimientoEspecial nuevoProc = new ProcedimientoEspecial(mascotaId, vetId, nombreProc, fechaHora, infoPre, detalle, seguimiento, EstadoProcedimiento.PROGRAMADA, costo);
+        ProcedimientoEspecial nuevoProc = new ProcedimientoEspecial(mascotaId, vetId, tipoProce, nombreProc, fechaHora, infoPre, detalle, seguimiento, EstadoProcedimiento.PROGRAMADA, costo);
         controller.registrarProcedimiento(nuevoProc);
 
         System.out.println("Procedimiento registrado con exito con ID: " + nuevoProc.getId());

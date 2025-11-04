@@ -7,6 +7,7 @@ public class ProcedimientoEspecial {
     private int id;
     private int mascotaId;
     private int veterinarioId;
+    private String tipoProcedimiento;
     private String nombreProcedimiento;
     private Timestamp fechaHora;
     private String informacionPreoperatoria;
@@ -15,10 +16,11 @@ public class ProcedimientoEspecial {
     private EstadoProcedimiento estado;
     private double costoProcedimiento;
 
-    public ProcedimientoEspecial(int pId, int pMascotaId, int pVeterinarioId, String pNombreProcedimiento, Timestamp pFechaHora, String pInformacionPreoperatoria, String pDetalleProcedimiento, String pSeguimientoPostoperatorio, EstadoProcedimiento pEstado, double pCostoProcedimiento) {
+    public ProcedimientoEspecial(int pId, int pMascotaId, int pVeterinarioId, String pTipoProcedimiento, String pNombreProcedimiento, Timestamp pFechaHora, String pInformacionPreoperatoria, String pDetalleProcedimiento, String pSeguimientoPostoperatorio, EstadoProcedimiento pEstado, double pCostoProcedimiento) {
         id = pId;
         mascotaId = pMascotaId;
         veterinarioId = pVeterinarioId;
+        tipoProcedimiento = pTipoProcedimiento;
         nombreProcedimiento = pNombreProcedimiento;
         fechaHora = pFechaHora;
         informacionPreoperatoria = pInformacionPreoperatoria;
@@ -28,9 +30,10 @@ public class ProcedimientoEspecial {
         costoProcedimiento = pCostoProcedimiento;
     }
     
-    public ProcedimientoEspecial(int pMascotaId, int pVeterinarioId, String pNombreProcedimiento, Timestamp pFechaHora, String pInformacionPreoperatoria, String pDetalleProcedimiento, String pSeguimientoPostoperatorio, EstadoProcedimiento pEstado, double pCostoProcedimiento) {
+    public ProcedimientoEspecial(int pMascotaId, int pVeterinarioId, String pTipoProcedimiento, String pNombreProcedimiento, Timestamp pFechaHora, String pInformacionPreoperatoria, String pDetalleProcedimiento, String pSeguimientoPostoperatorio, EstadoProcedimiento pEstado, double pCostoProcedimiento) {
         mascotaId = pMascotaId;
         veterinarioId = pVeterinarioId;
+        tipoProcedimiento = pTipoProcedimiento;
         nombreProcedimiento = pNombreProcedimiento;
         fechaHora = pFechaHora;
         informacionPreoperatoria = pInformacionPreoperatoria;
@@ -46,6 +49,8 @@ public class ProcedimientoEspecial {
     public void setMascotaId(int pMascotaId) { mascotaId = pMascotaId; }
     public int getVeterinarioId() { return veterinarioId; }
     public void setVeterinarioId(int pVeterinarioId) { veterinarioId = pVeterinarioId; }
+    public String getTipoProcedimiento() { return tipoProcedimiento; }
+    public void setTipoProcedimiento(String pTipoProcedimiento) { tipoProcedimiento = pTipoProcedimiento; }
     public String getNombreProcedimiento() { return nombreProcedimiento; }
     public void setNombreProcedimiento(String pNombreProcedimiento) { nombreProcedimiento = pNombreProcedimiento; }
     public Timestamp getFechaHora() { return fechaHora; }
@@ -65,6 +70,6 @@ public class ProcedimientoEspecial {
     public String toString() {
         return "ProcedimientoEspecial: id=" + id + ", "
                 + "\nnombreProcedimiento='" + nombreProcedimiento + "', "
-                + "\nestado=" + estado;
+                + "estado=" + estado ;
     }
 }
