@@ -2,16 +2,25 @@ package com.mycompany.happyfeet;
 
 import java.util.Scanner;
 import view.PacienteView;
+import view.CitasView;
+import view.FacturacionView;
+import view.InventarioView;
 
 
 public class Main {
     
     private PacienteView pacienteView;
+    private CitasView citasView;
+    private InventarioView inventarioView;
+    private FacturacionView facturacionView;
     private Scanner sc = new Scanner(System.in);
     
     
     public Main() {
         this.pacienteView = new PacienteView();
+        this.citasView = new CitasView();
+        this.inventarioView = new InventarioView();
+        this.facturacionView = new FacturacionView();
     }
 
     public static void main(String[] args){
@@ -23,12 +32,12 @@ public class Main {
         int opcion = -1;
         while (opcion != 0) {
             System.out.println("\n=============================================");
-            System.out.println("  SISTEMA DE GESTIÓN VETERINARIA HAPPY FEET");
+            System.out.println("  SISTEMA DE GESTION VETERINARIA HAPPY FEET");
             System.out.println("=============================================");
-            System.out.println("1. Módulo de Gestión de Pacientes");
-            System.out.println("2. Módulo de Servicios Médicos y Citas (No implementado)");
-            System.out.println("3. Módulo de Inventario y Farmacia (No implementado)");
-            System.out.println("4. Módulo de Facturación y Reportes (No implementado)");
+            System.out.println("1. Modulo de Gestion de Pacientes");
+            System.out.println("2. Modulo de Servicios Medicos y Citas");
+            System.out.println("3. Modulo de Inventario y Farmacia");
+            System.out.println("4. Modulo de Facturacion y Reportes");
             System.out.println("0. Salir del Sistema");
             System.out.print("Elija un modulo: ");
             
@@ -39,9 +48,13 @@ public class Main {
                     pacienteView.mostrarMenu();
                     break;
                 case 2:
+                    citasView.mostrarMenu();
+                    break;
                 case 3:
+                    inventarioView.mostrarMenu();
+                    break;
                 case 4:
-                    System.out.println("Este módulo aún no ha sido implementado.");
+                    facturacionView.mostrarMenu();
                     break;
                 case 0:
                     System.out.println("Gracias por usar Happy Feet. ¡Hasta pronto!");

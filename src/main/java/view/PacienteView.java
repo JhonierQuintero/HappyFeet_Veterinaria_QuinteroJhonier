@@ -22,23 +22,23 @@ public class PacienteView {
     public void mostrarMenu() {
         int opcion = -1;
         while (opcion != 0) {
-            System.out.println("\n--- Módulo de Gestión de Pacientes ---");
-            System.out.println("\n--- Gestión de Dueños ---");
+            System.out.println("\n--- Modulo de Gestion de Pacientes ---");
+            System.out.println("\n--- Gestion de Dueños ---");
             System.out.println("1. Agregar Dueño");
             System.out.println("2. Buscar Dueño por Documento");
             System.out.println("3. Actualizar Dueño");
             System.out.println("4. Eliminar Dueño");
             System.out.println("5. Listar Todos los Dueños");
-            System.out.println("\n--- Gestión de Mascotas ---");
+            System.out.println("\n--- Gestion de Mascotas ---");
             System.out.println("6. Agregar Mascota");
             System.out.println("7. Actualizar Mascota");
             System.out.println("8. Eliminar Mascota");
             System.out.println("9. Listar Todas las Mascotas");
             System.out.println("10. Ver Mascotas de un Dueño");
             System.out.println("11. Transferir Mascota entre Dueños");
-            System.out.println("\n0. Volver al Menú Principal");
+            System.out.println("\n0. Volver al Menu Principal");
 
-            System.out.print("Seleccione una opción: ");
+            System.out.print("Seleccione una opcion: ");
             opcion = scanner.nextInt();
             scanner.nextLine();
 
@@ -64,7 +64,7 @@ public class PacienteView {
 
     private void buscarDueño() {
         System.out.println("\n--- Buscar Dueño por Documento ---");
-        System.out.print("Ingrese el número de documento del dueño: ");
+        System.out.print("Ingrese el numero de documento del dueño: ");
         String doc = scanner.nextLine();
         Dueño dueño = controller.buscarDueñoPorDocumento(doc);
 
@@ -72,7 +72,7 @@ public class PacienteView {
             System.out.println("Dueño encontrado:");
             System.out.println(dueño.toString());
         } else {
-            System.out.println("No se encontró ningún dueño con ese documento.");
+            System.out.println("No se encontro ningun dueño con ese documento.");
         }
     }
 
@@ -93,11 +93,11 @@ public class PacienteView {
         String nombre = scanner.nextLine();
         if (!nombre.isEmpty()) dueño.setNombre(nombre);
 
-        System.out.print("Nueva dirección (dejar en blanco para no cambiar): ");
+        System.out.print("Nueva direccion (dejar en blanco para no cambiar): ");
         String direccion = scanner.nextLine();
         if (!direccion.isEmpty()) dueño.setDireccion(direccion);
 
-        System.out.print("Nuevo teléfono (dejar en blanco para no cambiar): ");
+        System.out.print("Nuevo telefono (dejar en blanco para no cambiar): ");
         String telefono = scanner.nextLine();
         if (!telefono.isEmpty()) dueño.setTelefono(telefono);
 
@@ -117,8 +117,8 @@ public class PacienteView {
             return;
         }
 
-        System.out.println("Se eliminará al dueño: " + dueño.getNombre());
-        System.out.print("¿Está seguro? (S/N): ");
+        System.out.println("Se eliminara al dueño: " + dueño.getNombre());
+        System.out.print("¿Esta seguro? (S/N): ");
         String confirmacion = scanner.nextLine();
         if (confirmacion.equalsIgnoreCase("S")) {
             controller.eliminarDueño(dueño.getId());
@@ -130,7 +130,7 @@ public class PacienteView {
 
     
     private void actualizarMascota() {
-        System.out.println("\n--- Actualizar Información de Mascota ---");
+        System.out.println("\n--- Actualizar Informacion de Mascota ---");
         System.out.print("Ingrese el ID de la mascota a modificar: ");
         int idMascota = scanner.nextInt();
         scanner.nextLine();
@@ -183,8 +183,8 @@ public class PacienteView {
             return;
         }
         
-        System.out.println("Se eliminará a la mascota: " + mascota.getNombre());
-        System.out.print("¿Está seguro? (S/N): ");
+        System.out.println("Se eliminara a la mascota: " + mascota.getNombre());
+        System.out.print("¿Esta seguro? (S/N): ");
         String confirmacion = scanner.nextLine();
         if (confirmacion.equalsIgnoreCase("S")) {
             controller.eliminarMascota(mascota.getId());
