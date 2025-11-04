@@ -72,3 +72,11 @@ INSERT INTO cita_estados (nombre, descripcion) VALUES
 ('Finalizada', 'Cita completada'),
 ('Cancelada', 'Cita cancelada'),
 ('No Asistió', 'Cliente no se presentó');
+
+INSERT INTO servicios (id, nombre, descripcion, categoria, precio_base, duracion_estimada_minutos, activo) VALUES
+(1, 'Consulta General', 'Evaluacion medica completa de la mascota, diagnostico y recomendaciones.', 'Consultas', 50000, 30, TRUE),
+(2, 'Procedimiento Quirurgico', 'Costo base para intervenciones quirurgicas. El valor final puede variar.', 'Cirugia', 250000, 90, TRUE),
+(3, 'Aplicacion de Vacuna', 'Servicio de aplicacion de una dosis de vacuna. No incluye el costo de la vacuna.', 'Prevencion', 15000, 10, TRUE),
+(4, 'Consulta de Urgencia', 'Atencion medica prioritaria fuera del horario habitual o sin cita previa.', 'Urgencias', 85000, 45, TRUE),
+(5, 'Control Post-Operatorio', 'Revision de la mascota despues de un procedimiento quirurgico para monitorear la recuperacion.', 'Seguimiento', 30000, 20, TRUE),
+(6, 'Limpieza Dental (Profilaxis)', 'Procedimiento para eliminar el sarro y la placa bacteriana de los dientes.', 'Odontologia', 120000, 60, TRUE);

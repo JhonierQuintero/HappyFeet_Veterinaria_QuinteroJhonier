@@ -72,4 +72,18 @@ public class PrescripcionDAO {
         } catch (SQLException ex) { ex.printStackTrace(); }
         return lista;
     }
+    
+    public List<Prescripcion> listarPorConsulta(int consultaId) {
+        List<Prescripcion> lista = new ArrayList<>();
+        String sql = "SELECT * FROM prescripciones WHERE consulta_id = ?";
+        try (Connection con = ConexionDB.conectar(); PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, consultaId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(new Prescripcion(rs.getInt("id"), (Integer) rs.getObject("consulta_id"), (Integer) rs.getObject("procedimiento_id"), rs.getInt("producto_id"), rs.getInt("cantidad"), rs.getString("dosis"), rs.getString("frecuencia"), rs.getInt("duracion_dias"), rs.getString("instrucciones"), rs.getTimestamp("fecha_prescripcion")));
+                }
+            }
+        } catch (SQLException ex) { ex.printStackTrace(); }
+        return lista;
+    }
 }
