@@ -34,7 +34,13 @@ public class CanjeBeneficiosDAO {
             ps.setInt(1, clubId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    lista.add(new CanjeBeneficios(rs.getInt("id"), rs.getInt("club_mascotas_id"), rs.getInt("beneficio_id"), rs.getTimestamp("fecha_canje"), rs.getInt("puntos_canjeados"), EstadoCanje.valueOf(rs.getString("estado").toUpperCase()), (Integer) rs.getObject("factura_id")));
+                    lista.add(new CanjeBeneficios(rs.getInt("id"), 
+                            rs.getInt("club_mascotas_id"), 
+                            rs.getInt("beneficio_id"), 
+                            rs.getTimestamp("fecha_canje"), 
+                            rs.getInt("puntos_canjeados"), 
+                            EstadoCanje.valueOf(rs.getString("estado").toUpperCase()), 
+                            (Integer) rs.getObject("factura_id")));
                 }
             }
         } catch (SQLException ex) { ex.printStackTrace(); }
