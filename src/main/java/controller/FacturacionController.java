@@ -12,18 +12,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import model.entities.Dueño;
+import model.entities.Especie;
 import model.entities.Factura;
 import model.entities.Inventario;
 import model.entities.ItemFactura;
+import model.entities.Mascota;
 import model.entities.MovimientoInventario;
+import model.entities.Raza;
 import model.entities.Servicio;
 import model.enums.EstadoFactura;
 import model.enums.TipoItemFactura;
 import model.enums.TipoMovimientoInventario;
+import repository.DueñoDAO;
+import repository.EspecieDAO;
 import repository.FacturaDAO;
 import repository.InventarioDAO;
 import repository.ItemFacturaDAO;
+import repository.MascotaDAO;
 import repository.MovimientoInventarioDAO;
+import repository.RazaDAO;
 import repository.ServicioDAO;
 
 public class FacturacionController {
@@ -34,6 +41,10 @@ public class FacturacionController {
     private InventarioDAO inventarioDAO;
     private MovimientoInventarioDAO movimientoInventarioDAO;
     private ServicioDAO servicioDAO;
+    private DueñoDAO dueñoDAO;
+    private MascotaDAO mascotaDAO;
+    private RazaDAO razaDAO;
+    private EspecieDAO especieDAO;
     
     private static final double IMPUESTO_IVA = 0.19;
 
@@ -44,6 +55,10 @@ public class FacturacionController {
         this.inventarioDAO = new InventarioDAO();
         this.movimientoInventarioDAO = new MovimientoInventarioDAO();
         this.servicioDAO = new ServicioDAO();
+        this.dueñoDAO = new DueñoDAO();
+        this.especieDAO = new EspecieDAO();
+        this.mascotaDAO = new MascotaDAO();
+        this.razaDAO = new RazaDAO();
     }
 
     public void crearFacturaYGenerarTxt(Factura pFactura, List<ItemFactura> pItems) {
@@ -171,6 +186,40 @@ public class FacturacionController {
         
         return "Reporte de Facturacion:\n" + "Periodo: " + pInicio + " a " + pFin + "\n" + "Total de Facturas: " + numeroFacturas + "\n" + "Monto Total Facturado: " + String.format("%.2f", totalFacturado);
     }
+    
+    public String generarReporteEspecie(Timestamp pInicio, Timestamp pFin) {
+        
+        List<Mascota> mascotas = mascotaDAO.listar();
+        List<Raza> razas = razaDAO.listar();
+        List<Especie> especies = especieDAO.listar();
+        List<Dueño> dueños = dueñoDAO.listar();
+        
+        List<Factura> facturasEnPeriodo = facturaDAO.listar().stream()
+            .filter(f -> f.getFechaEmision().after(pInicio) && f.getFechaEmision().before(pFin))
+            .collect(Collectors.toList());
+        
+        if(facturasEnPeriodo.isEmpty()){
+            return "No hay facturas registradas";
+        }
+        
+        if(dueños.isEmpty()){
+            return "no hay dueños registrados";
+        }
+        
+        for (Factura f : facturasEnPeriodo){
+            List<Integer> dueñosId = new ArrayList<>();
+            dueñosId.add(f.getDuenoId());
+            
+        }
+                
+        
+        
+        double totalFacturado = facturasEnPeriodo.stream().mapToDouble(Factura::getTotal).sum();
+        int numeroFacturas = facturasEnPeriodo.size();
+        
+        return "Reporte de Facturacion:\n" + "Periodo: " + pInicio + " a " + pFin + "\n" + "Total de Facturas: " + numeroFacturas + "\n" + "Monto Total Facturado: " + String.format("%.2f", totalFacturado);
+    }
+    
     
     public List<Inventario> getProductosConStockBajo() {
         return inventarioDAO.listar().stream().filter(p -> p.getCantidadStock() < p.getStockMinimo()).collect(Collectors.toList());
