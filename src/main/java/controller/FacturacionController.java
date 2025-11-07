@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -188,36 +189,74 @@ public class FacturacionController {
     }
     
     public String generarReporteEspecie(Timestamp pInicio, Timestamp pFin) {
-        
+
         List<Mascota> mascotas = mascotaDAO.listar();
         List<Raza> razas = razaDAO.listar();
         List<Especie> especies = especieDAO.listar();
         List<Dueño> dueños = dueñoDAO.listar();
-        
+
         List<Factura> facturasEnPeriodo = facturaDAO.listar().stream()
             .filter(f -> f.getFechaEmision().after(pInicio) && f.getFechaEmision().before(pFin))
             .collect(Collectors.toList());
-        
+
         if(facturasEnPeriodo.isEmpty()){
             return "No hay facturas registradas";
         }
-        
+
         if(dueños.isEmpty()){
             return "no hay dueños registrados";
         }
-        
+
         for (Factura f : facturasEnPeriodo){
             List<Integer> dueñosId = new ArrayList<>();
             dueñosId.add(f.getDuenoId());
-            
         }
-                
+
+        double totalFacturado = facturasEnPeriodo.stream()
+            .mapToDouble(Factura::getTotal).sum();
         
-        
-        double totalFacturado = facturasEnPeriodo.stream().mapToDouble(Factura::getTotal).sum();
         int numeroFacturas = facturasEnPeriodo.size();
-        
-        return "Reporte de Facturacion:\n" + "Periodo: " + pInicio + " a " + pFin + "\n" + "Total de Facturas: " + numeroFacturas + "\n" + "Monto Total Facturado: " + String.format("%.2f", totalFacturado);
+
+        Map<String, Double> ingresosPorEspecie = new HashMap<>();
+
+        for (Factura factura : facturasEnPeriodo) {
+            
+            int idDueno = factura.getDuenoId();
+            List<Mascota> mascotasDelDueno = mascotas.stream()
+                .filter(m -> m.getDueñoId() == idDueno)
+                .collect(Collectors.toList());
+            
+            for (Mascota m : mascotasDelDueno) {
+                
+                Raza raza = razas.stream()
+                    .filter(r -> r.getId() == m.getRazaId())
+                    .findFirst().orElse(null);
+                
+                if (raza != null) {
+                    Especie especie = especies.stream()
+                        .filter(e -> e.getId() == raza.getEspecieId())
+                        .findFirst()
+                        .orElse(null);
+                    
+                    if (especie != null) {
+                        ingresosPorEspecie.put(especie.getNombre(), ingresosPorEspecie.getOrDefault(especie.getNombre(), 0.0) + factura.getTotal());
+                    }
+                }
+            }
+        }
+
+        String reporte = "INFORME DE RENTABILIDAD POR ESPECIE\n" +
+                        "Periodo: " + pInicio + " - " + pFin + "\n" +
+                        "| Especie | Ingresos Totales |\n";
+
+        for (Map.Entry<String, Double> e : ingresosPorEspecie.entrySet()) {
+            reporte += "| " + e.getKey() + " | " + e.getValue() + " |\n";
+        }
+
+        reporte += "\nTotal Facturas: " + numeroFacturas +
+                   "\nMonto Total Facturado: " + totalFacturado;
+
+        return reporte;
     }
     
     
