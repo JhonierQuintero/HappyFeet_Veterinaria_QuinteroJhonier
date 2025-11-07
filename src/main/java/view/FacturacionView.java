@@ -168,6 +168,7 @@ public class FacturacionView {
             System.out.println("1. Servicios mas solicitados");
             System.out.println("2. Analisis de facturacion por periodo");
             System.out.println("3. Reporte de inventario (Stock bajo)");
+            System.out.println("4. Reporte de facturacion por periodo de especie");
             System.out.println("0. Volver");
 
             System.out.print("Seleccione un reporte: ");
@@ -177,6 +178,7 @@ public class FacturacionView {
                 case 1: reporteServicios(); break;
                 case 2: reporteFacturacion(); break;
                 case 3: reporteInventario(); break;
+                case 4: reporteEspecie(); break;
                 case 0: break;
                 default: System.out.println("Opcion no valida.");
             }
@@ -203,6 +205,18 @@ public class FacturacionView {
         Timestamp fin = Timestamp.valueOf(scanner.nextLine());
         
         String reporte = controller.generarReporteFacturacion(inicio, fin);
+        System.out.println(reporte);
+    }
+    
+    private void reporteEspecie() {
+        System.out.println("\n--- Reporte: Analisis de Facturacion ---");
+        System.out.print("Ingrese fecha de inicio (AAAA-MM-DD HH:MM:SS): ");
+        Timestamp inicio = Timestamp.valueOf(scanner.nextLine());
+        
+        System.out.print("Ingrese fecha de fin (AAAA-MM-DD HH:MM:SS): ");
+        Timestamp fin = Timestamp.valueOf(scanner.nextLine());
+        
+        String reporte = controller.generarReporteEspecie(inicio, fin);
         System.out.println(reporte);
     }
     
